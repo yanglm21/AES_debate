@@ -358,7 +358,7 @@ def judge(essay, r, essay_id):
 
     print("chat completed")
     print(essay_id)
-    filename = "/Users/ylm/THU/code/exp/data/llm_debate/chat_output_" + str(essay_id) + ".txt"
+    filename = "../data/llm_debate/chat_output_" + str(essay_id) + ".txt"
     save_chat_to_txt(groupchat, filename)
     return
 
@@ -492,7 +492,7 @@ if __name__ == "__main__":
             errors.append([row["essay_id"], e])
             continue
         # save errors to a file
-        with open("/Users/ylm/THU/code/exp/data/llm_debate/errors.txt", "w", encoding="utf-8") as file:
+        with open("../data/llm_debate/errors.txt", "w", encoding="utf-8") as file:
             for error in errors:
                 file.write(f"{error[0]}: {error[1]}\n")
 
