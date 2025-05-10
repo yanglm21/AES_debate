@@ -1,31 +1,11 @@
 from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
-import time
 import pandas as pd
 import tqdm
 import re
 from prompt import author, content, integrator, language, planner, rubrics, structure
+import api_config
 
-
-gpt4_config = {
-    # 每次运行时根据时间自动生成seed
-    "cache_seed": int(time.time()),
-    "temperature": 0,
-    "timeout": 120,
-    "model": "gpt-4o",
-    "base_url": "https://xiaoai.plus/v1",
-    "api_key": "sk-deB5aUH0rl7T13aDLNJs0bROhXETg6qaTUpbOJ7mK8t4heV9"
-}
-
-deepseek_config = {
-    "cache_seed": int(time.time()),
-    "temperature": 0,
-    "timeout": 120,
-    "model": "deepseek-chat",
-    "base_url": "https://api.deepseek.com",
-    "api_key": "sk-f14970f964474d029f90362666b66524"
-}
-
-MODEL_CONFIG = deepseek_config
+MODEL_CONFIG = api_config.deepseek_config
 
 # 新增：专家顺序解析函数
 def get_evaluation_order(planner_message):
@@ -44,6 +24,7 @@ current_stage = "planner"
 expert_order = []
 current_expert_index = 0
 debate_round = 0
+MAX_DEBATE_ROUND = 3
 
 def custom_speaker_selection_func(last_speaker, groupchat):
     global current_stage, expert_order, current_expert_index, debate_round
@@ -75,7 +56,7 @@ def custom_speaker_selection_func(last_speaker, groupchat):
             speaker = agents["Author"]
         
         debate_round += 1
-        if debate_round >= 8:  # 4轮辩论
+        if debate_round >= MAX_DEBATE_ROUND*2:  # 4轮辩论
             current_expert_index += 1
             debate_round = 0
             if current_expert_index >= len(expert_order):
@@ -122,7 +103,12 @@ def save_chat_to_txt(groupchat, filename):
             file.write(f"{message['name']}: {message['content']}\n\n")
 
 # 修改后的judge函数
-def judge(essay, r):
+def judge(essay, r, filename="chat_output.txt"):
+    global current_stage, expert_order, current_expert_index, debate_round
+    current_stage = "planner"
+    expert_order = []
+    current_expert_index = 0
+    debate_round = 0
     user_proxy = UserProxyAgent(
         name="Admin",
         system_message="A human admin. TERMINATE when integration done.",
@@ -143,7 +129,7 @@ def judge(essay, r):
     groupchat = GroupChat(
         agents=[user_proxy, planner, rubrics, content, language, structure, author, integrator],
         messages=[],
-        max_round=20,
+        max_round=25,
         speaker_selection_method=custom_speaker_selection_func,
     )
 
@@ -163,7 +149,8 @@ Analyze the following essay:
     )
     
     # 保持原有保存逻辑...
-    save_chat_to_txt(groupchat, "../data/chat_output.txt")
+    
+    save_chat_to_txt(groupchat, f'../output/{filename}')
 
 if __name__ == "__main__":
     essay = """

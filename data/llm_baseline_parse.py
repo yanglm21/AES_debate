@@ -15,19 +15,19 @@ def extract_feedback(file_path):
     else:
         scores = int(re.findall(score_pattern2, content)[0]) / 100.0
 
-    # 提取两个 ------****** 之间的评语
+    # 提取两个 ------ 之间的评语
     feedback_pattern = r'------(.*?)------'
     feedbacks = re.findall(feedback_pattern, content, re.DOTALL)
 
     return scores, feedbacks
 
-all_essays = pd.read_csv("/Users/ylm/THU/code/exp/data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
+all_essays = pd.read_csv("/Users/ylm/THU/code/AES_debate/data/ivypanda.csv")
 
 # res 空dataframe保存结果
 res = pd.DataFrame(columns=['essay_id', 'score', 'feedback'])
 for index, row in all_essays.iterrows():
     essay_id = row['essay_id']
-    filepath = '/Users/ylm/THU/code/exp/data/llm_baseline/chat_output_' + str(essay_id) + '.txt'
+    filepath = '../output/ivypanda/baseline/chat_output_' + str(essay_id) + '.txt'
     # 提取分数和评语
     scores, feedbacks = extract_feedback(filepath)
     # scores, feedbacks 存入dataframe res
@@ -38,4 +38,4 @@ for index, row in all_essays.iterrows():
 
 
 # 输出结果
-res.to_csv('/Users/ylm/THU/code/exp/data/llm_baseline/feedbacks.csv', sep='\t')
+res.to_csv('../output/ivypanda/baseline/0.feedbacks.csv', sep='\t', index=False)
