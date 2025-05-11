@@ -14,6 +14,27 @@ def judge(essay, filename="baseline/chat_output.txt"):
         
         Essay: {essay}
 
+        Language: 
+            - Assess language style and tone for genre appropriateness
+            - Provide specific language improvement suggestions, but do not go into too much detail
+            - Your response should be informative yet concise, no more than 200 words for each round
+            - Don't focus on technical jargon and format standards too much. Your focus should be on language itself.
+
+        Content:
+            - Assess content depth and breadth based on genre requirements
+            - Provide specific content improvement suggestions, but do not go into too much detail
+            - Your response should be informative yet concise, no more than 200 words for each round
+            - Don't focus on technical jargon and format standards too much. Your focus should be on the content itself.
+
+        Structure:
+            - Analyze the overall architecture of the writing
+            - Evaluate logical connections between paragraphs
+            - Evaluate structure appropriateness for the specific genre
+            - Provide specific structural improvement suggestions, but do not go into too much detail
+            - Your response should be informative yet concise, no more than 200 words for each round
+            - Don't focus on technical jargon and format standards too much. Your focus should be on the structure itself.
+
+
         Your output MUST STRICTLY follow this format:
         [[score]]: Brief overall evaluation (1-2 sentences)
         ------

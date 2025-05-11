@@ -3,7 +3,7 @@ import tqdm
 import pandas as pd
 import time
 
-def debate_judge(all_essays, with_rubric=True):
+def debate_judge(all_essays, dataset_name, with_rubric=True):
     for index, row in tqdm.tqdm(all_essays.iterrows(), total=len(all_essays), desc="Processing essays"):
         print(f"Processing essay {row['essay_id']}")
         try:
@@ -11,7 +11,7 @@ def debate_judge(all_essays, with_rubric=True):
                 r = prompt.all_rubrics.all_rubrics[row["essay_set"]]
             else:
                 r = "No rubric"
-            llm_debate_new.judge(row["essay"], r, f"ivypanda/debate/chat_output_{row['essay_id']}.txt")
+            llm_debate_new.judge(row["essay"], r, f"{dataset_name}/debate/chat_output_{row['essay_id']}.txt")
         except Exception as e:
             # 处理异常
             print(f"Error processing essay {row['essay_id']}: {e}")
@@ -48,9 +48,9 @@ if __name__ == "__main__":
     # rubric_judge(all_essays)
     # baseline_judge(all_essays)
     ivypanda = pd.read_csv("../data/ivypanda.csv")
-    debate_judge(ivypanda, with_rubric=False)
+    # debate_judge(ivypanda, "ivypanda", with_rubric=False)
     # # rubric_judge(ivypanda, with_rubric=False)
-    # baseline_judge(ivypanda)
+    baseline_judge(ivypanda)
 
 
 
