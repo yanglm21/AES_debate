@@ -1,0 +1,29 @@
+{
+    "reviews": {
+        "A": {
+            "Intention": 8,
+            "Genre": 9,
+            "Contradiction": 9,
+            "Specificity": 8,
+            "Constructiveness": 9,
+            "Depth": 7
+        },
+        "B": {
+            "Intention": 7,
+            "Genre": 8,
+            "Contradiction": 8,
+            "Specificity": 7,
+            "Constructiveness": 8,
+            "Depth": 6
+        },
+        "C": {
+            "Intention": 9,
+            "Genre": 10,
+            "Contradiction": 10,
+            "Specificity": 9,
+            "Constructiveness": 10,
+            "Depth": 8
+        }
+    },
+    "best_review": "C"
+}
