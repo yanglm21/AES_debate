@@ -47,9 +47,10 @@ def save_chat_to_txt(groupchat, filename):
     with open(filename, "w", encoding="utf-8") as file:
         for message in groupchat.messages:
             file.write(f"{message['name']}: {message['content']}\n\n")
+        print(f"Chat saved to {filename}")
 
 # 修改后的judge函数
-def judge(essay, r, filename="chat_output.txt"):
+def judge(essay, filename="chat_output.txt"):
     user_proxy = UserProxyAgent(
         name="Admin",
         system_message="A human admin. TERMINATE when integration done.",
@@ -73,13 +74,11 @@ def judge(essay, r, filename="chat_output.txt"):
 
     manager = GroupChatManager(groupchat=groupchat, llm_config=MODEL_CONFIG)
 
-    prompt = """rubrics: 
-{rubrics}
----
+    prompt = """
 Analyze the following essay:
 {essay}
 ---
-    """.format(rubrics=r, essay=essay)
+    """.format(essay=essay)
 
     user_proxy.initiate_chat(
         manager,
