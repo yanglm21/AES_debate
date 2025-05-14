@@ -5,6 +5,8 @@ import time
 
 def debate_judge(all_essays, dataset_name, with_rubric=True):
     for index, row in tqdm.tqdm(all_essays.iterrows(), total=len(all_essays), desc="Processing essays"):
+        if row['essay_id'] <30:
+            continue
         print(f"Processing essay {row['essay_id']}")
         try:
             if with_rubric:
@@ -48,9 +50,9 @@ if __name__ == "__main__":
     # rubric_judge(all_essays)
     # baseline_judge(all_essays)
     ivypanda = pd.read_csv("../data/ivypanda.csv")
-    # debate_judge(ivypanda, "ivypanda", with_rubric=False)
+    debate_judge(ivypanda, "ivypanda", with_rubric=False)
     # # rubric_judge(ivypanda, with_rubric=False)
-    baseline_judge(ivypanda)
+    # baseline_judge(ivypanda)
 
 
 

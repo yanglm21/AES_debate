@@ -94,7 +94,7 @@ def configure_agent(name):
         name=name,
         system_message=system_message,
         llm_config=MODEL_CONFIG,
-        is_termination_msg=lambda msg: msg["name"]== "Integrator" and "TERMINATE" in msg["content"]  # 统一终止条件
+        is_termination_msg=lambda msg: msg["name"]== "Integrator"  # 统一终止条件
     )
 
 def save_chat_to_txt(groupchat, filename):
