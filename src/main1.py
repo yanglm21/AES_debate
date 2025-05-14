@@ -55,14 +55,10 @@ if __name__ == "__main__":
     all_essays = pd.read_csv("../data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
     # debate_judge(all_essays, "AES")
     ma_judge(all_essays, "AES")
-    rubric_judge(all_essays, "AES")
-    baseline_judge(all_essays, "AES")
 
-    ivypanda = pd.read_csv("../data/ivypanda.csv")
+    # ivypanda = pd.read_csv("../data/ivypanda.csv")
     # debate_judge(ivypanda, "ivypanda", with_rubric=False)
-    ma_judge(ivypanda, "ivypanda")
-    rubric_judge(ivypanda, "ivypanda", with_rubric=False)
-    baseline_judge(ivypanda, "ivypanda", with_rubric=False)
+    # ma_judge(ivypanda, "ivypanda")
 
 
 

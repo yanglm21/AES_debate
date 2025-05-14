@@ -15,13 +15,15 @@ def extract_feedback(file_path):
 
     return scores, feedbacks
 
-all_essays = pd.read_csv("/Users/ylm/THU/code/AES_debate/data/ivypanda.csv")
+all_essays = pd.read_csv("/Users/maggieyang/Desktop/AES_debate/data/ivypanda.csv")
 
 # res 空dataframe保存结果
 res = pd.DataFrame(columns=['essay_id', 'score', 'feedback'])
 for index, row in all_essays.iterrows():
     essay_id = row['essay_id']
-    filepath = '../output/ivypanda/debate/chat_output_' + str(essay_id) + '.txt'
+    if essay_id >6:
+        continue
+    filepath = '/Users/maggieyang/Desktop/AES_debate/output/ivypanda/debate/chat_output_' + str(essay_id) + '.txt'
     # 提取分数和评语
     scores, feedbacks = extract_feedback(filepath)
     if scores == []:
@@ -35,4 +37,4 @@ for index, row in all_essays.iterrows():
 
 
 # 输出结果
-res.to_csv('/Users/ylm/THU/code/AES_debate/output/ivypanda/debate/0.feedbacks.csv', sep='\t', index=False)
+res.to_csv('/Users/maggieyang/Desktop/AES_debate/output/ivypanda/debate/0.feedbacks.csv', sep='\t', index=False)

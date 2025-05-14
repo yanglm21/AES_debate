@@ -21,7 +21,7 @@ def extract_feedback(file_path):
 
     return scores, feedbacks
 
-all_essays = pd.read_csv("/Users/ylm/THU/code/AES_debate/data/ivypanda.csv")
+all_essays = pd.read_csv("/Users/maggieyang/Desktop/AES_debate/data/ivypanda.csv")
 
 # res 空dataframe保存结果
 res = pd.DataFrame(columns=['essay_id', 'score', 'feedback'])
