@@ -45,6 +45,8 @@ def baseline_judge(all_essays, dataset_name):
 def ma_judge(all_essays, dataset_name):
     for index, row in tqdm.tqdm(all_essays.iterrows(), total=len(all_essays), desc="Processing essays"):
         # 进度条
+        if dataset_name=="AES" and row['essay_id'] < 18292:
+            continue
         print(f"Processing essay {row['essay_id']}")
         try:
             llm_ma.judge(row["essay"], f"{dataset_name}/ma/chat_output_{row['essay_id']}.txt")
@@ -56,9 +58,9 @@ if __name__ == "__main__":
     # debate_judge(all_essays, "AES")
     ma_judge(all_essays, "AES")
 
-    # ivypanda = pd.read_csv("../data/ivypanda.csv")
+    ivypanda = pd.read_csv("../data/ivypanda.csv")
     # debate_judge(ivypanda, "ivypanda", with_rubric=False)
-    # ma_judge(ivypanda, "ivypanda")
+    ma_judge(ivypanda, "ivypanda")
 
 
 
