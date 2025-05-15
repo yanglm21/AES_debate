@@ -2,7 +2,7 @@ from nltk import ngrams, word_tokenize
 import pandas as pd
 
 # 候选作文（学生作文原文，保留所有占位符和错误）
-all_candidates = pd.read_csv("/Users/ylm/THU/code/exp/data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
+all_candidates = pd.read_csv("../data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
 
 def calculate_distinct(tokens, max_n=4):
     """
@@ -41,7 +41,7 @@ for index, row in all_candidates.iterrows():
     # 合并结果
     results.append({
         "essay_id": essay_id,
-        **distinct  # 展开字典为列
+        **distinct
     })
 
 # 转换为DataFrame
@@ -49,6 +49,9 @@ distinct_df = pd.DataFrame(results)
 
 # 按需设置列顺序
 final_df = distinct_df[["essay_id", "distinct_1", "distinct_2", "distinct_4"]]
+final_df["distinct_1"] = final_df["distinct_1"].round(3)
+final_df["distinct_2"] = final_df["distinct_2"].round(3)
+final_df["distinct_4"] = final_df["distinct_4"].round(3)
 
 # 保存结果
-final_df.to_csv("/Users/ylm/THU/code/exp/data/distinct_scores.csv", sep='\t', index=False)
+final_df.to_csv("../data/distinct_scores.csv", sep='\t', index=False)

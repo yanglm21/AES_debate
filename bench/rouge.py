@@ -16,7 +16,7 @@ references = {
     }
 
 # 候选作文（学生作文原文，保留所有占位符和错误）
-all_candidates = pd.read_csv("/Users/ylm/THU/code/exp/data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
+all_candidates = pd.read_csv("../data/random_essays_50.csv", sep='\t', encoding='utf-8', on_bad_lines='skip')
 
 
 # 遍历DataFrame计算ROUGE
@@ -36,9 +36,9 @@ for index, row in all_candidates.iterrows():
     
     results.append({
         "essay_id": essay_id,
-        "rouge1": rouge1,
-        "rouge2": rouge2,
-        "rougeL": rougeL
+        "rouge1": round(rouge1, 3),
+        "rouge2": round(rouge2, 3),
+        "rougeL": round(rougeL, 3)
     })
 
 # 转换为DataFrame
@@ -48,4 +48,4 @@ rouge_df = pd.DataFrame(results)
 final_df = rouge_df[["essay_id", "rouge1", "rouge2", "rougeL"]]
 
 # 保存结果
-final_df.to_csv("/Users/ylm/THU/code/exp/data/rouge_scores.csv", sep='\t', index=False)
+final_df.to_csv("../data/rouge_scores.csv", sep='\t', index=False)
